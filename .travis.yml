@@ -4,16 +4,25 @@ jdk:
 dist: trusty
 addons:
   apt:
+    sources:
+      - sourceline: 'https://packages.microsoft.com/config/ubuntu/16.04/prod.list'
+          key_url: 'https://packages.microsoft.com/keys/microsoft.asc'
     packages:
       - oracle-java8-installer
+      - mssql-tools
+      - unixodbc-dev
 services:
   - postgresql
   - mysql
+  - docker
 before_install:
     - export TZ=Europe/London
+    - docker pull microsoft/mssql-server-linux:latest
+    - docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=yourStrong!Password' -p 1433:1433 -d microsoft/mssql-server-linux:latest
 before_script:
   - psql -c 'create database test;' -U postgres
   - mysql -e 'create database test;'
+  - sqlcmd -U sa -P yourStrong\!Password -Q "CREATE DATABASE test"
 script:
   - mvn clean package -DskipTests=true
   - mvn test -Dtest=UnitTestSuite
@@ -22,4 +31,4 @@ script:
   - mvn test -Dtest=SqlServerTestSuite
 cache:
   directories:
-  - $HOME/.m2
+  - /home/james/.m2
