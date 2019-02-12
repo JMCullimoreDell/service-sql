@@ -1,10 +1,9 @@
 language: java
-jdk:
-  - oraclejdk8
+#jdk:
+#  - oraclejdk8
 dist: xenial
 addons:
   apt:
-    update: true
     sources:
       - sourceline: 'deb [arch=amd64] https://packages.microsoft.com/ubuntu/16.04/prod xenial main'
         key_url: 'https://packages.microsoft.com/keys/microsoft.asc'
