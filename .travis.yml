@@ -31,4 +31,5 @@ script:
   - mvn test -Dtest=SqlServerTestSuite
 cache:
   directories:
-  - /home/james/.m2
+  - $HOME/.m2
+  
