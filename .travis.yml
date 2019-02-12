@@ -1,7 +1,7 @@
 language: java
 jdk:
   - oraclejdk8
-dist: trusty
+dist: xenial
 addons:
   apt:
     update: true
